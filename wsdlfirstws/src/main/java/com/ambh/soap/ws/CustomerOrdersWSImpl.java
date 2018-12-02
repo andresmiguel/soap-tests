@@ -4,10 +4,7 @@ import com.ambh.soap.*;
 import org.apache.cxf.feature.Features;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Features(features = "org.apache.cxf.feature.LoggingFeature")
 public class CustomerOrdersWSImpl implements CustomerOrdersPortType {
@@ -33,6 +30,22 @@ public class CustomerOrdersWSImpl implements CustomerOrdersPortType {
         orders.add(order);
 
         customerOrders.put(BigInteger.ONE, orders);
+    }
+
+    @Override
+    public DeleteOrdersResponse deleteOrders(DeleteOrdersRequest request) {
+
+        BigInteger customerId = request.getCustomerId();
+        BigInteger orderId = request.getOrderId();
+
+        if (customerOrders.containsKey(customerId)) {
+            customerOrders.get(customerId).removeIf(order -> order.getId().equals(orderId));
+        }
+
+        DeleteOrdersResponse response = new DeleteOrdersResponse();
+        response.setResult(true);
+
+        return response;
     }
 
     @Override
