@@ -13,5 +13,6 @@ import javax.jws.WebService;
 public interface PaymentProcessor {
 
 	@WebResult(name = "response")
-	PaymentProcessorResponse processPayment(@WebParam(name = "paymentProcessorRequest") PaymentProcessorRequest paymentProcessorRequest);
+	PaymentProcessorResponse processPayment(@WebParam(name = "paymentProcessorRequest") PaymentProcessorRequest paymentProcessorRequest)
+			throws ServiceException;
 }
